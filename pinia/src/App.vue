@@ -1,12 +1,26 @@
 <script setup>
+import Movie from "./components/Movie.vue";
+import {useMoviesStore} from "./stores/MovieStore.js";
 
+const movieStore = useMoviesStore();
 </script>
 
 <template>
-<header class="header">
-  <img src="/logo.svg" alt="logo" class="header-logo">
-  <h2>My Favorite Movies</h2>
-</header>
+  <main>
+    <header class="header">
+      <img src="/logo.svg" alt="logo" class="header-logo">
+      <h2>My Favorite Movies</h2>
+    </header>
+    <div class="movies">
+      <h3>All Movies</h3>
+      <Movie v-for="movie in movieStore.movies"
+             :key="movie.id"
+             :movie="movie"
+      />
+      {{ movieStore.movies }}
+    </div>
+  </main>
+
 </template>
 
 <style lang="css">
