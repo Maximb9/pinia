@@ -1,12 +1,20 @@
 <script setup>
+import {useMoviesStore} from "../stores/MovieStore.js";
+
+const moviesStore = useMoviesStore();
 const props = defineProps({
   movie: {
     type: Object,
     required: true,
     default: () => {
     }
+  },
+  isSearch: {
+    type: Boolean,
+    required: false,
+    default: false
   }
-})
+});
 </script>
 
 <template>
@@ -20,12 +28,15 @@ const props = defineProps({
       {{ movie.original_title }} ({{ movie.release_date }})
     </div>
     <span class="movie-overview">{{ movie.overview }}</span>
-    <div class="movie-buttons">
-      <button class="btn movie-buttons-watched">
+    <div class="movie-buttons" v-if="!isSearch">
+      <button class="btn movie-buttons-watched" @click="moviesStore.toggleWatched(movie.id)">
         <span v-if="!movie.isWatched">Watched</span>
         <span v-else>Unwatched</span>
       </button>
-      <button class="btn movie-buttons-delete">Delete</button>
+      <button class="btn movie-buttons-delete" @click="moviesStore.deleteMovie(movie.id)">Delete</button>
+    </div>
+    <div class="movie-buttons" v-else>
+      <button class="btn btn_green">Add</button>
     </div>
   </div>
 </template>

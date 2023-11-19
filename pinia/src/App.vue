@@ -1,8 +1,13 @@
 <script setup>
 import Movie from "./components/Movie.vue";
+import Search from "./components/Search.vue";
 import {useMoviesStore} from "./stores/MovieStore.js";
 
 const movieStore = useMoviesStore();
+
+const setTab = (id) => {
+  movieStore.setActiveTab(id)
+}
 </script>
 
 <template>
@@ -14,11 +19,11 @@ const movieStore = useMoviesStore();
     <div class="tabs">
       <button
           :class="['btn', {btn_green: movieStore.activeTab === 1}]"
-          @click="movieStore.setActiveTab(1)"
+          @click="setTab(1)"
       >Favorite</button>
       <button
           :class="['btn', {btn_green: movieStore.activeTab === 2}]"
-          @click="movieStore.setActiveTab(2)"
+          @click="setTab(2)"
       >Search</button>
     </div>
     <div class="movies" v-if="movieStore.activeTab === 1">
@@ -37,7 +42,9 @@ const movieStore = useMoviesStore();
           :movie="movie"
       />
     </div>
-    <div class="search" v-else>Search</div>
+    <div class="search" v-else>
+      <Search />
+    </div>
   </main>
 
 </template>
