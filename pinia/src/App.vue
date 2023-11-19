@@ -11,14 +11,33 @@ const movieStore = useMoviesStore();
       <img src="/logo.svg" alt="logo" class="header-logo">
       <h2>My Favorite Movies</h2>
     </header>
-    <div class="movies">
-      <h3>All Movies</h3>
-      <Movie v-for="movie in movieStore.movies"
-             :key="movie.id"
-             :movie="movie"
-      />
-      {{ movieStore.movies }}
+    <div class="tabs">
+      <button
+          :class="['btn', {btn_green: movieStore.activeTab === 1}]"
+          @click="movieStore.setActiveTab(1)"
+      >Favorite</button>
+      <button
+          :class="['btn', {btn_green: movieStore.activeTab === 2}]"
+          @click="movieStore.setActiveTab(2)"
+      >Search</button>
     </div>
+    <div class="movies" v-if="movieStore.activeTab === 1">
+      <div>
+        <h3>Watched Movies (count: {{ movieStore.watchedMovies.length }})</h3>
+        <Movie
+            v-for="movie in movieStore.watchedMovies"
+            :key="movie.id"
+            :movie="movie"
+        />
+      </div>
+      <h3>All Movies (count: {{movieStore.totalCountMovies}})</h3>
+      <Movie
+          v-for="movie in movieStore.movies"
+          :key="movie.id"
+          :movie="movie"
+      />
+    </div>
+    <div class="search" v-else>Search</div>
   </main>
 
 </template>

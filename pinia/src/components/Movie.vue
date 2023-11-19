@@ -20,6 +20,13 @@ const props = defineProps({
       {{ movie.original_title }} ({{ movie.release_date }})
     </div>
     <span class="movie-overview">{{ movie.overview }}</span>
+    <div class="movie-buttons">
+      <button class="btn movie-buttons-watched">
+        <span v-if="!movie.isWatched">Watched</span>
+        <span v-else>Unwatched</span>
+      </button>
+      <button class="btn movie-buttons-delete">Delete</button>
+    </div>
   </div>
 </template>
 
